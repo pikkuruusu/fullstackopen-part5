@@ -3,12 +3,15 @@ import Blog from './components/Blog'
 import blogService from './services/blogs'
 import loginService from './services/login'
 
+import Notification from './components/Notification'
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
+  const [notificationMessage, setNotificationMessage] = useState(null)
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
@@ -43,6 +46,10 @@ const App = () => {
       setUsername('')
       setPassword('')
       blogService.setToken(user.token)
+      setNotificationMessage(`${user.name} was successfully logged in.`)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     } catch (exception) {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
@@ -52,6 +59,10 @@ const App = () => {
   }
 
   const handleLogout = (e) => {
+    setNotificationMessage(`${user.name} was logged out`)
+    setTimeout(() => {
+      setNotificationMessage(null)
+    }, 5000)
     window.localStorage.removeItem('loggedBlogUser')
     setUser(null)
   }
@@ -61,10 +72,8 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
 
-        {errorMessage ?
-          <div>{errorMessage}</div> :
-          <div></div>
-        }
+        <Notification color="red" message={errorMessage} />
+        <Notification color="green" message={notificationMessage} />
 
         <form onSubmit={handleLogin}>
           <div>
@@ -143,6 +152,10 @@ const App = () => {
       setTitle('')
       setAuthor('')
       setUrl('')
+      setNotificationMessage(`A new blog ${returnedBlog.title} by ${returnedBlog.author} was added.`)
+      setTimeout(() => {
+        setNotificationMessage(null)
+      }, 5000)
     } catch (exception) {
         setErrorMessage(exception.message)
         setTimeout(() => {
@@ -159,10 +172,8 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
-      {errorMessage ?
-          <div>{errorMessage}</div> :
-          <div></div>
-      }
+      <Notification color="red" message={errorMessage} />
+      <Notification color="green" message={notificationMessage} />
       <p>{user.name} is logged in</p>
       <button onClick={handleLogout}>Logout</button>
       {blogForm()}
