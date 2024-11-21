@@ -19,13 +19,13 @@ const App = () => {
   const blogFormRef = useRef()
 
   function compareLikes(a, b) {
-    return b.likes - a.likes;
+    return b.likes - a.likes
   }
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs.sort(compareLikes) )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -40,10 +40,10 @@ const App = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault()
-    
+
     try {
       const user = await loginService.login(
-        {username, password}
+        { username, password }
       )
 
       window.localStorage.setItem('loggedBlogUser', JSON.stringify(user))
@@ -85,11 +85,11 @@ const App = () => {
         setNotificationMessage(null)
       }, 5000)
     } catch (exception) {
-        setErrorMessage(exception.message)
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-        console.log(exception.message)
+      setErrorMessage(exception.message)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      console.log(exception.message)
     }
   }
 
@@ -107,9 +107,9 @@ const App = () => {
     try {
       await blogService.update(blogObject.id, newBlogObject)
 
-      setBlogs((oldBlogList) => 
-        oldBlogList.map((blog) => 
-          blog.id === blogObject.id ? {...blog, likes: newLikesCount} : blog
+      setBlogs((oldBlogList) =>
+        oldBlogList.map((blog) =>
+          blog.id === blogObject.id ? { ...blog, likes: newLikesCount } : blog
         ).sort(compareLikes)
       )
     } catch (exception) {
@@ -125,13 +125,13 @@ const App = () => {
     if (window.confirm(`Remove blog ${blogObject.title}?`)) {
       try {
         await blogService.deleteBlog(blogObject.id)
-  
-        setBlogs((oldBlogList) => 
+
+        setBlogs((oldBlogList) =>
           oldBlogList.filter((blog) => blog.id !== blogObject.id)
         )
       } catch (exception) {
-        const exceptionMessage = 
-          exception.response.data.error 
+        const exceptionMessage =
+          exception.response.data.error
             ? exception.response.data.error
             : exception.message
 
@@ -150,9 +150,9 @@ const App = () => {
       <Notification color="red" message={errorMessage} />
       <Notification color="green" message={notificationMessage} />
 
-      {!user && 
+      {!user &&
         <div>
-          <LoginForm 
+          <LoginForm
             handleLogin={handleLogin}
             handleUsernameChange={setUsername}
             handlePasswordChange={setPassword}

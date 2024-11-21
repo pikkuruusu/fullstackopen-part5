@@ -1,9 +1,9 @@
-import { useState } from "react"
+import { useState } from 'react'
 
 const Blog = ({ blog, user, increaseLike, deleteBlog }) => {
   const [infoVisible, setinfoVisble] = useState(false)
 
-  const showWhenVisibile = { display: infoVisible ? '' : 'none'}
+  const showWhenVisibile = { display: infoVisible ? '' : 'none' }
 
   const blogStyle = {
     paddingTop: 10,
@@ -14,7 +14,7 @@ const Blog = ({ blog, user, increaseLike, deleteBlog }) => {
   }
 
   const showAdditionalInfo = () => setinfoVisble(!infoVisible)
-  
+
   return (
     <div style={blogStyle}>
       {blog.title} {blog.author} <button onClick={showAdditionalInfo}>{infoVisible ? 'Hide' : 'Show'}</button>

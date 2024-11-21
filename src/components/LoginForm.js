@@ -1,4 +1,4 @@
-import PropTypes from "prop-types"
+import PropTypes from 'prop-types'
 
 const LoginForm = ({
   handleLogin,
@@ -9,29 +9,29 @@ const LoginForm = ({
 }) => {
   return (
     <div>
-    <h2>Log in to application</h2>
-    <form onSubmit={handleLogin}>
-      <div>
+      <h2>Log in to application</h2>
+      <form onSubmit={handleLogin}>
+        <div>
         username
-        <input
-          type='text'
-          value={username}
-          name='Username'
-          onChange={({target}) => handleUsernameChange(target.value)}
-        />
-      </div>
-      <div>
+          <input
+            type='text'
+            value={username}
+            name='Username'
+            onChange={({ target }) => handleUsernameChange(target.value)}
+          />
+        </div>
+        <div>
         password
-        <input
-          type='password'
-          value={password}
-          name='Password'
-          onChange={({target}) => handlePasswordChange(target.value)}
-        />
-      </div>
-      <button type='submit'>login</button>
-    </form>
-  </div>
+          <input
+            type='password'
+            value={password}
+            name='Password'
+            onChange={({ target }) => handlePasswordChange(target.value)}
+          />
+        </div>
+        <button type='submit'>login</button>
+      </form>
+    </div>
   )
 }
 
