@@ -121,6 +121,29 @@ const App = () => {
     }
   }
 
+  const deleteBlog = async (blogObject) => {
+    if (window.confirm(`Remove blog ${blogObject.title}?`)) {
+      try {
+        await blogService.deleteBlog(blogObject.id)
+  
+        setBlogs((oldBlogList) => 
+          oldBlogList.filter((blog) => blog.id !== blogObject.id)
+        )
+      } catch (exception) {
+        const exceptionMessage = 
+          exception.response.data.error 
+            ? exception.response.data.error
+            : exception.message
+
+        setErrorMessage(exceptionMessage)
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+        console.log(exception.message)
+      }
+    }
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -152,7 +175,7 @@ const App = () => {
         </div>
       }
       {user && blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} increaseLike={increaseLike} />
+        <Blog key={blog.id} blog={blog} user={user} increaseLike={increaseLike} deleteBlog={deleteBlog} />
       )}
     </div>
   )
