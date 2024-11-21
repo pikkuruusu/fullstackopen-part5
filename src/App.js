@@ -18,9 +18,13 @@ const App = () => {
 
   const blogFormRef = useRef()
 
+  function compareLikes(a, b) {
+    return b.likes - a.likes;
+  }
+
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs( blogs.sort(compareLikes) )
     )  
   }, [])
 
@@ -101,12 +105,12 @@ const App = () => {
     }
 
     try {
-      const returnedBlog = await blogService.update(blogObject.id, newBlogObject)
+      await blogService.update(blogObject.id, newBlogObject)
 
       setBlogs((oldBlogList) => 
         oldBlogList.map((blog) => 
           blog.id === blogObject.id ? {...blog, likes: newLikesCount} : blog
-        )
+        ).sort(compareLikes)
       )
     } catch (exception) {
       setErrorMessage(exception.message)
