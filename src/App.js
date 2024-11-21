@@ -89,6 +89,34 @@ const App = () => {
     }
   }
 
+  const increaseLike = async (blogObject) => {
+    const newLikesCount = blogObject.likes + 1
+
+    const newBlogObject = {
+      user: blogObject.user.id,
+      likes: newLikesCount,
+      author: blogObject.author,
+      title: blogObject.title,
+      url: blogObject.url
+    }
+
+    try {
+      const returnedBlog = await blogService.update(blogObject.id, newBlogObject)
+
+      setBlogs((oldBlogList) => 
+        oldBlogList.map((blog) => 
+          blog.id === blogObject.id ? {...blog, likes: newLikesCount} : blog
+        )
+      )
+    } catch (exception) {
+      setErrorMessage(exception.message)
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      console.log(exception.message)
+    }
+  }
+
   return (
     <div>
       <h2>blogs</h2>
@@ -120,7 +148,7 @@ const App = () => {
         </div>
       }
       {user && blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} increaseLike={increaseLike} />
       )}
     </div>
   )
