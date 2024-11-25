@@ -77,3 +77,36 @@ test('clicking button shows url and likes', async () => {
   const userElement = screen.getByTestId('user-name')
   expect(userElement).toBeVisible()
 })
+
+test('clicking like button triggers event', async () => {
+  const testBlog = {
+    title: "Blog title",
+    author: "Blog author",
+    url: "blog url",
+    likes: 4,
+    user: {
+      username: "test username",
+      name: "test name"
+    }
+  }
+  
+  const testUser = {
+    username: "test username",
+    name: "test name"
+  }
+
+  const mockhhandler = vi.fn()
+  
+  render(<Blog blog={testBlog} user={testUser} increaseLike={mockhhandler}/>)
+
+  const user = userEvent.setup()
+
+  const showButton = screen.getByText('Show')
+  await user.click(showButton)
+
+  const likeButton = screen.getByTestId('like-button')
+  await user.click(likeButton)
+  await user.click(likeButton)
+
+  expect(mockhhandler.mock.calls).toHaveLength(2)
+})

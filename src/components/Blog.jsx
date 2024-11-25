@@ -20,7 +20,7 @@ const Blog = ({ blog, user, increaseLike, deleteBlog }) => {
       <span data-testid="blog-title">{blog.title}</span> <span data-testid="blog-author">{blog.author}</span> <button onClick={showAdditionalInfo}>{infoVisible ? 'Hide' : 'Show'}</button>
       <div style={showWhenVisibile}>
         <span data-testid="blog-url">{blog.url}</span><br />
-        likes {blog.likes} <button onClick={() => increaseLike(blog)}>like</button><br />
+        likes {blog.likes} <button onClick={() => increaseLike(blog)} data-testid="like-button">like</button><br />
         <span data-testid="user-name">{blog.user.name}</span><br />
         {
           blog.user.username === user.username
