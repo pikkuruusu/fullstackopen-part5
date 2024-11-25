@@ -1,6 +1,23 @@
 import { render, screen } from '@testing-library/react'
 import Blog from './Blog'
 import { expect } from 'vitest'
+import userEvent from '@testing-library/user-event'
+
+const testBlog = {
+  title: "Blog title",
+  author: "Blog author",
+  url: "blog url",
+  likes: 4,
+  user: {
+    username: "test username",
+    name: "test name"
+  }
+}
+
+const testUser = {
+  username: "test username",
+  name: "test name"
+}
 
 test('render only title and author', () => {
   const testBlog = {
@@ -13,12 +30,12 @@ test('render only title and author', () => {
       name: "test name"
     }
   }
-
+  
   const testUser = {
     username: "test username",
     name: "test name"
   }
-
+  
   render(<Blog blog={testBlog} user={testUser} />)
 
   const titleElement = screen.getByTestId('blog-title')
@@ -29,4 +46,34 @@ test('render only title and author', () => {
   expect(urlElement).not.toBeVisible()
   const userElement = screen.getByTestId('user-name')
   expect(userElement).not.toBeVisible()
+})
+
+test('clicking button shows url and likes', async () => {
+  const testBlog = {
+    title: "Blog title",
+    author: "Blog author",
+    url: "blog url",
+    likes: 4,
+    user: {
+      username: "test username",
+      name: "test name"
+    }
+  }
+  
+  const testUser = {
+    username: "test username",
+    name: "test name"
+  }
+  
+  render(<Blog blog={testBlog} user={testUser} />)
+
+  const user = userEvent.setup()
+
+  const button = screen.getByText('Show')
+  await user.click(button)
+
+  const urlElement = screen.getByTestId('blog-url')
+  expect(urlElement).toBeVisible()
+  const userElement = screen.getByTestId('user-name')
+  expect(userElement).toBeVisible()
 })
