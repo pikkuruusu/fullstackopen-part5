@@ -17,11 +17,11 @@ const Blog = ({ blog, user, increaseLike, deleteBlog }) => {
 
   return (
     <div style={blogStyle}>
-      {blog.title} {blog.author} <button onClick={showAdditionalInfo}>{infoVisible ? 'Hide' : 'Show'}</button>
+      <span data-testid="blog-title">{blog.title}</span> <span data-testid="blog-author">{blog.author}</span> <button onClick={showAdditionalInfo}>{infoVisible ? 'Hide' : 'Show'}</button>
       <div style={showWhenVisibile}>
-        {blog.url}<br />
+        <span data-testid="blog-url">{blog.url}</span><br />
         likes {blog.likes} <button onClick={() => increaseLike(blog)}>like</button><br />
-        {blog.user.name}<br />
+        <span data-testid="user-name">{blog.user.name}</span><br />
         {
           blog.user.username === user.username
             ? <button onClick={() => deleteBlog(blog)}>Remove</button>
