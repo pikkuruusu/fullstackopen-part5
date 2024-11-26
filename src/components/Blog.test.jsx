@@ -5,21 +5,21 @@ import userEvent from '@testing-library/user-event'
 
 test('render only title and author', () => {
   const testBlog = {
-    title: "Blog title",
-    author: "Blog author",
-    url: "blog url",
+    title: 'Blog title',
+    author: 'Blog author',
+    url: 'blog url',
     likes: 4,
     user: {
-      username: "test username",
-      name: "test name"
+      username: 'test username',
+      name: 'test name'
     }
   }
-  
+
   const testUser = {
-    username: "test username",
-    name: "test name"
+    username: 'test username',
+    name: 'test name'
   }
-  
+
   render(<Blog blog={testBlog} user={testUser} />)
 
   const titleElement = screen.getByTestId('blog-title')
@@ -34,21 +34,21 @@ test('render only title and author', () => {
 
 test('clicking button shows url and likes', async () => {
   const testBlog = {
-    title: "Blog title",
-    author: "Blog author",
-    url: "blog url",
+    title: 'Blog title',
+    author: 'Blog author',
+    url: 'blog url',
     likes: 4,
     user: {
-      username: "test username",
-      name: "test name"
+      username: 'test username',
+      name: 'test name'
     }
   }
-  
+
   const testUser = {
-    username: "test username",
-    name: "test name"
+    username: 'test username',
+    name: 'test name'
   }
-  
+
   render(<Blog blog={testBlog} user={testUser} />)
 
   const user = userEvent.setup()
@@ -64,23 +64,23 @@ test('clicking button shows url and likes', async () => {
 
 test('clicking like button triggers event', async () => {
   const testBlog = {
-    title: "Blog title",
-    author: "Blog author",
-    url: "blog url",
+    title: 'Blog title',
+    author: 'Blog author',
+    url: 'blog url',
     likes: 4,
     user: {
-      username: "test username",
-      name: "test name"
+      username: 'test username',
+      name: 'test name'
     }
   }
-  
+
   const testUser = {
-    username: "test username",
-    name: "test name"
+    username: 'test username',
+    name: 'test name'
   }
 
   const mockHandler = vi.fn()
-  
+
   render(<Blog blog={testBlog} user={testUser} increaseLike={mockHandler}/>)
 
   const user = userEvent.setup()
