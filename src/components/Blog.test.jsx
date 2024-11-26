@@ -3,22 +3,6 @@ import Blog from './Blog'
 import { expect } from 'vitest'
 import userEvent from '@testing-library/user-event'
 
-const testBlog = {
-  title: "Blog title",
-  author: "Blog author",
-  url: "blog url",
-  likes: 4,
-  user: {
-    username: "test username",
-    name: "test name"
-  }
-}
-
-const testUser = {
-  username: "test username",
-  name: "test name"
-}
-
 test('render only title and author', () => {
   const testBlog = {
     title: "Blog title",
@@ -95,9 +79,9 @@ test('clicking like button triggers event', async () => {
     name: "test name"
   }
 
-  const mockhhandler = vi.fn()
+  const mockHandler = vi.fn()
   
-  render(<Blog blog={testBlog} user={testUser} increaseLike={mockhhandler}/>)
+  render(<Blog blog={testBlog} user={testUser} increaseLike={mockHandler}/>)
 
   const user = userEvent.setup()
 
@@ -108,5 +92,5 @@ test('clicking like button triggers event', async () => {
   await user.click(likeButton)
   await user.click(likeButton)
 
-  expect(mockhhandler.mock.calls).toHaveLength(2)
+  expect(mockHandler.mock.calls).toHaveLength(2)
 })
